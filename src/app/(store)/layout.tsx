@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "../globals.css"; // Import global styles
 import { ClerkProvider } from "@clerk/nextjs"; // Clerk for authentication
 import Header from "./../../components/Header";
+import Footer from "./../../components/Footer";
 
 // Metadata for the page
 export const metadata: Metadata = {
@@ -16,15 +17,14 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider dynamic>
-      {" "}
-      {/* Make sure 'dynamic' is a valid prop */}
       <html lang="en">
         <body className={`antialiased`}>
-          <main>
             <Header />
+          <main >
             {children}
             
           </main>
+            <Footer/>
         </body>
       </html>
     </ClerkProvider>

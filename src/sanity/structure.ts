@@ -1,4 +1,4 @@
-import type {StructureResolver} from 'sanity/structure'
+import type { StructureResolver } from 'sanity/structure';
 
 // https://www.sanity.io/docs/structure-builder-cheat-sheet
 export const structure: StructureResolver = (S) =>
@@ -6,7 +6,12 @@ export const structure: StructureResolver = (S) =>
     .title('Eshopr.eco')
     .items([
       S.documentTypeListItem('category').title('Categories'),
+      
+      // Ensure 'products' is only added once
+      S.documentTypeListItem('products').title('Products'),
+
+      // Filter out 'category' and 'products' from the list of document types
       ...S.documentTypeListItems().filter(
-        (item) => item.getId() && !['category',].includes(item.getId()!),
+        (item) => item.getId() && !['category', 'products'].includes(item.getId()!)
       ),
-    ])
+    ]);

@@ -27,7 +27,7 @@ const ThemeToggle = () => {
       {/* Dark Mode Toggle */}
       <button
         onClick={toggleTheme}
-        className="text-gray-800 dark:text-gray-200 hover:text-blue-600 transition"
+        className="text-gray-800 dark:text-gray-200 hover:text-blue-600 transition p-1 border shadow-2xl rounded-full"
         aria-label="Toggle Dark Mode"
       >
         {isDarkMode ? ( <> <SunIcon className="w-9 h-9" /> </> ) : ( <> <MoonIcon className="w-9 h-9" /> </> )}

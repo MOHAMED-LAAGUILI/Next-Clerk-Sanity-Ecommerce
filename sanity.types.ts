@@ -150,6 +150,7 @@ export type Products = {
   stock?: number;
 };
 
+
 export type Category = {
   _id: string;
   _type: "category";
@@ -273,14 +274,43 @@ export type ALL_CATEGORIES_QUERYResult = Array<{
 
 // Source: ./src/sanity/lib/Groq_Queries/getAllProducts.ts
 // Variable: ALL_PRODUCTS_QUERY
-// Query: *[_type == "product"] | order(name asc)
-export type ALL_PRODUCTS_QUERYResult = Array<never>;
+// Query: *[_type == "products"] | order(name asc)
+export type ALL_PRODUCTS_QUERYResult = Array<{
+  _id: string;
+  _type: "products";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  slug?: Slug;
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  description?: string;
+  price?: number;
+  categories?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "category";
+  }>;
+  stock?: number;
+}>;
 
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     "*[_type == \"category\"] | order(name asc) ": ALL_CATEGORIES_QUERYResult;
-    "*[_type == \"product\"] | order(name asc) ": ALL_PRODUCTS_QUERYResult;
+    "*[_type == \"products\"] | order(name asc)": ALL_PRODUCTS_QUERYResult;
   }
 }
