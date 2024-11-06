@@ -7,24 +7,42 @@ export const salesType = defineType({
   type: 'document',
   icon: DocumentIcon,
   fields: [
-    // Customer Name
+    // Sale Title
     defineField({
-      name: 'customerName',
-      title: 'Customer Name',
+      name: 'saleTitle',
+      title: 'Sale Title',
       type: 'string',
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) => Rule.required().max(100), // Ensure sale title is required and limited in length
     }),
-    // Customer Email
+
+    // Sale Description
     defineField({
-      name: 'customerEmail',
-      title: 'Customer Email',
+      name: 'saleDescription',
+      title: 'Sale Description',
+      type: 'text',
+      validation: (Rule) => Rule.required().max(500), // Limit description length
+    }),
+
+    // Discount Amount (percentage or flat value)
+    defineField({
+      name: 'discountAmount',
+      title: 'Discount Amount',
+      type: 'number',
+      validation: (Rule) => Rule.required().min(0), // Make sure discount is a positive value
+    }),
+
+    // Coupon Code
+    defineField({
+      name: 'couponCode',
+      title: 'Coupon Code',
       type: 'string',
-      validation: (Rule) => Rule.required().email(),
+      validation: (Rule) => Rule.required().max(50), // Ensure the coupon code is required and reasonably short
     }),
-    // Sale Date
+
+    // Valid From (Date when the sale starts)
     defineField({
-      name: 'saleDate',
-      title: 'Sale Date',
+      name: 'validFrom',
+      title: 'Valid From',
       type: 'datetime',
       options: {
         dateFormat: 'YYYY-MM-DD',
@@ -32,71 +50,37 @@ export const salesType = defineType({
       },
       validation: (Rule) => Rule.required(),
     }),
-    // Total Sale Amount
+
+    // Valid To (Date when the sale ends)
     defineField({
-      name: 'totalAmount',
-      title: 'Total Amount',
-      type: 'number',
-      validation: (Rule) => Rule.required().min(0),
-    }),
-    // Payment Status
-    defineField({
-      name: 'paymentStatus',
-      title: 'Payment Status',
-      type: 'string',
+      name: 'validTo',
+      title: 'Valid To',
+      type: 'datetime',
       options: {
-        list: [
-          { title: 'Paid', value: 'paid' },
-          { title: 'Pending', value: 'pending' },
-          { title: 'Failed', value: 'failed' },
-        ],
+        dateFormat: 'YYYY-MM-DD',
+        timeFormat: 'HH:mm:ss',
       },
       validation: (Rule) => Rule.required(),
     }),
-    // Products Sold
+
+    // Is Active (Boolean to toggle sale status)
     defineField({
-      name: 'products',
-      title: 'Products Sold',
-      type: 'array',
-      of: [
-        {
-          type: 'object',
-          fields: [
-            defineField({
-              name: 'product',
-              title: 'Product',
-              type: 'reference',
-              to: [{ type: 'products' }], // Reference to products type
-            }),
-            defineField({
-              name: 'quantity',
-              title: 'Quantity',
-              type: 'number',
-              validation: (Rule) => Rule.required().min(1),
-            }),
-            defineField({
-              name: 'price',
-              title: 'Price',
-              type: 'number',
-              validation: (Rule) => Rule.required().min(0),
-            }),
-          ],
-        },
-      ],
+      name: 'isActive',
+      title: 'Is Active',
+      type: 'boolean',
+      initialValue: true, // Default to true, so the sale is active by default
       validation: (Rule) => Rule.required(),
     }),
   ],
   preview: {
     select: {
-      title: 'customerName',
-      subtitle: 'totalAmount',
-      media: 'products[0].product.image', // Adjust based on product structure
+      title: 'saleTitle', // Show sale title in the preview
+      subtitle: 'discountAmount', // Show discount amount in the subtitle
     },
-    prepare({ title, subtitle, media }) {
+    prepare({ title, subtitle }) {
       return {
-        title,
-        subtitle: `$${subtitle.toFixed(2)}` || 'No amount',
-        media,
+        title: title || 'Untitled Sale',
+        subtitle: `${subtitle}% off` || 'No discount',
       };
     },
   },

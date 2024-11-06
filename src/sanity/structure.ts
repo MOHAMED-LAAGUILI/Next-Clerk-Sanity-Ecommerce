@@ -9,9 +9,10 @@ export const structure: StructureResolver = (S) =>
       
       // Ensure 'products' is only added once
       S.documentTypeListItem('products').title('Products'),
+      S.documentTypeListItem('sales').title('Sales'),
 
       // Filter out 'category' and 'products' from the list of document types
       ...S.documentTypeListItems().filter(
-        (item) => item.getId() && !['category', 'products'].includes(item.getId()!)
+        (item) => item.getId() && !['category', 'products', 'sales'].includes(item.getId()!)
       ),
     ]);

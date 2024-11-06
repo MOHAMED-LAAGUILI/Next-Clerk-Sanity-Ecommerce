@@ -9,19 +9,19 @@ const Footer = () => {
   const { user } = useUser();
 
   return (
-    <footer className="py-4 font-bold w-full shadow-lg bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200">
-      <div className="container mx-auto flex flex-col md:flex-row justify-between items-center px-6">
+    <footer className="py-6 md:py-8 font-bold w-full shadow-lg bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+      <div className="container mx-auto flex flex-col md:flex-row justify-between items-center px-6 sm:px-12">
         {/* Company Info */}
-        <div className="mb-2 md:mb-0 text-center md:text-left">
-          <h4 className="text-lg font-bold">Eshopr.eco</h4>
-          <p className="text-sm">Your sustainable shopping destination.</p>
+        <div className="mb-4 md:mb-0 text-center md:text-left">
+          <h4 className="text-xl font-semibold">Eshopr.eco</h4>
+          <p className="text-sm mt-1">Your sustainable shopping destination.</p>
           {user && (
             <p className="mt-2 text-sm">Logged in as {user.fullName}!</p>
           )}
         </div>
 
         {/* Links */}
-        <div className="flex flex-col md:flex-row md:space-x-6 mb-2 md:mb-0">
+        <div className="flex flex-col md:flex-row md:space-x-6 mb-4 md:mb-0 text-center md:text-left">
           <Link href="/" className="hover:text-blue-400 transition">Home</Link>
           <Link href="/about" className="hover:text-blue-400 transition">About Us</Link>
           <Link href="/contact" className="hover:text-blue-400 transition">Contact</Link>
@@ -29,7 +29,7 @@ const Footer = () => {
         </div>
 
         {/* Social Media Icons */}
-        <div className="flex space-x-4 mt-2 md:mt-0">
+        <div className="flex space-x-6 mt-4 md:mt-0 justify-center md:justify-start">
           <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
             <FontAwesomeIcon icon={faFacebook} className="h-6 w-6 text-gray-600 hover:text-blue-500 transition" />
           </a>
@@ -42,7 +42,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="text-center mt-2">
+      <div className="text-center mt-4">
         <p className="text-sm">© {new Date().getFullYear()} Eshopr.eco. All rights reserved.</p>
       </div>
     </footer>

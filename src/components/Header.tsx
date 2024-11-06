@@ -7,6 +7,7 @@ import { PackageIcon, TrolleyIcon, SearchIcon } from "@sanity/icons";
 import ThemeToggle from "./ThemeToggle";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AnimatedText from "./AnimatedText";
 
 const Header = () => {
   const { user } = useUser();
@@ -40,7 +41,12 @@ const Header = () => {
       <div className="container mx-auto flex flex-wrap justify-between items-center px-4 py-4">
         {/* Logo */}
         <Link href="/" className="text-3xl font-bold text-blue-600 dark:text-blue-300 transition transform hover:scale-105">
-          Eshopr.eco
+ <AnimatedText 
+            text={"Eshopr.eco"} 
+            width={"0%"} 
+            height={"0%"} 
+            size={""}
+          />
         </Link>
 <div  className="sm:hidden">
         <ThemeToggle />
@@ -59,7 +65,7 @@ const Header = () => {
         </button>
 
         {/* Search Input */}
-        <form action="/search" className="hidden sm:flex flex-grow max-w-xl">
+        <form action="/search"  className="hidden sm:flex flex-grow max-w-xl">
           <div className="flex items-center border border-gray-300 dark:border-gray-600 rounded-lg overflow-hidden flex-grow">
             <input
               type="text"
@@ -126,7 +132,7 @@ const Header = () => {
             />
           </form>
           <Link href="/basket" className="py-2 text-gray-800 dark:text-gray-200 hover:text-blue-600 transition flex items-center" aria-label="View basket">
-            <TrolleyIcon className="inline mr-1" />
+          <TrolleyIcon className="mr-1 h-6 w-6" />
             Basket
           </Link>
           <ClerkLoaded>
