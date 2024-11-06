@@ -1,6 +1,7 @@
 import { imageUrl } from "@/lib/imageUrl";
 import Image from "next/image";
 import GetSingleProductBySlug from './../../../../sanity/lib/Groq_Queries/getSingleProductBySlug';
+import AddToBasketButton from "@/components/AddToBasketButton";
 
 async function SingleProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -53,7 +54,9 @@ async function SingleProductPage({ params }: { params: Promise<{ slug: string }>
           <p className="mt-2 text-xl font-bold">${product.price}</p>
         </div>
 
-       
+       <div className="mt-6">
+        <AddToBasketButton product={product} disabled={isOutOfStock}/>
+       </div>
        
       </div>
 

@@ -44,8 +44,8 @@ const Countdown: React.FC<CountdownProps> = ({ validTo }) => {
     }, [validTo]);
 
     return (
-        <div className="bg-green-500 px-4 py-2 rounded-md text-white font-semibold">
-            Time Remaining: {timeRemaining.days}d {timeRemaining.hours}h {timeRemaining.minutes}m {timeRemaining.seconds}s
+        <div className=" px-4 py-2 rounded-md font-semibold">
+         {timeRemaining.days}d {timeRemaining.hours}h {timeRemaining.minutes}m {timeRemaining.seconds}s
         </div>
     );
 };

@@ -1,26 +1,27 @@
-"use client"
+"use client";
 import { Category, Products } from "../../sanity.types";
 import ProductGrid from './ProductsGrid';
 import CategorySelector from "./CategorySelector";
 
 interface ProductViewProps {
   products: Products[];
-  categories: Category[]; 
+  categories: Category[];
 }
 
 const ProductView = ({ products, categories }: ProductViewProps) => {
   return (
-    <div className="flex flex-col container  p-6 space-y-12">
+    <div className="flex flex-col container mx-auto px-4 py-6">
       
-    {/* Categories Section */}
-   <section>
-<CategorySelector categories={categories} />
-    </section>  
+      {/* Categories Section */}
+      <section className="w-full md:w-1/4 mb-8 md:mb-0 md:mr-8">
+        <CategorySelector categories={categories} />
+      </section>
 
       {/* Products Section */}
-      <section>
+      <section className="w-full md:w-3/4">
         <ProductGrid products={products} />
       </section>
+
     </div>
   );
 };

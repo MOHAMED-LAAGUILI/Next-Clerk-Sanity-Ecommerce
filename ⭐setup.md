@@ -1,6 +1,6 @@
-### ##### ##### Setup Clerk Authication and Sanity CMS ### #####
+### ##### ##### Setup Clerk Authication and Sanity CMS and Strip Payment ### #####
 
-2️⃣ Get Started with Clerk 👉 https://go.clerk.com/k0ls6Zb
+1️⃣ Get Started with Clerk 👉 https://go.clerk.com/k0ls6Zb
 create new project
 
 npm install @clerk/nextjs --legacy-peer-deps
@@ -13,9 +13,12 @@ https://clerk.com/changelog/2024-10-22-clerk-nextjs-v6
 after wrapping the layout with the clerck provide we want avoid to apply that wraped layout to the sanity studio
 so ensure the structure must be the following 
 
+2️⃣ Get Started with Strip 👉 https://dashboard.stripe.com/test/apikeys
+just loged in/ or create an account head to dashboard.stripe.com/test/apikeys
+and copy stripe key put it in ur local.env 
 
 
-1️⃣ Get Started with Sanity 👉 https://www.sanity.io/sonny
+2️⃣ Get Started with Sanity 👉 https://www.sanity.io/sonny
 
 # to install sanity CMS
 create an account in the sanity site and copy the dev cmd
