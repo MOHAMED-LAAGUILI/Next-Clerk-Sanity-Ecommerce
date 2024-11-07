@@ -1,4 +1,6 @@
 ### ##### ##### Setup Clerk Authication and Sanity CMS and Strip Payment ### #####
+src vidio
+https://www.youtube.com/live/o-fgWea75O4
 
 1️⃣ Get Started with Clerk 👉 https://go.clerk.com/k0ls6Zb
 create new project
