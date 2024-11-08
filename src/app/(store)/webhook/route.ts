@@ -82,38 +82,53 @@ async function createOrderInSanity(session: Stripe.Checkout.Session) {
 
     try {
         const lineItemsWithProduct = await stripe.checkout.sessions.listLineItems(id, {
-            expand: ["data.price.product"],
+            expand: ["data.price.product"],  // Expanding product details
         });
         console.log("Retrieved line items:", lineItemsWithProduct.data);
 
-        const sanityProducts = lineItemsWithProduct.data.map((item) => ({
-            _key: randomUUID(),
-            product: {
-                _type: "reference",
-                _ref: (item.price?.product as Stripe.Product)?.metadata?.id,
-            },
-            quantity: item.quantity || 0,
-        }));
+        // Mapping products to Sanity schema format
+        const sanityProducts = lineItemsWithProduct.data.map((item) => {
+            // Safely handle price, defaulting to 0 if price or unit_amount is null
+            const price = item.price?.unit_amount ? item.price.unit_amount / 100 : 0;  // Default to 0 if price is null
+            const productReference = item.price?.product ? (item.price.product as Stripe.Product)?.metadata?.id : null;
+            return {
+                _key: randomUUID(),
+                product: {
+                    _type: "reference",
+                    _ref: productReference,  // Ensure product reference is correctly set
+                },
+                quantity: item.quantity || 0,
+                price: price,  // Add price field
+            };
+        });
+
         console.log("Mapped products for Sanity:", sanityProducts);
 
+        // Calculate totalPrice, defaulting to 0 if amount_total or total_details.amount_discount is null
+        const totalPrice = total_details?.amount_discount ? total_details.amount_discount / 100 : amount_total ? amount_total / 100 : 0;
+        const discountAmount = total_details?.amount_discount ? total_details.amount_discount / 100 : 0;
+
+        // Creating the order in Sanity
         const order = await client.create({
             _type: "order",
-            orderNumber,
-            stripeCheckoutSessionId: id,
-            paymentIntentId: payment_intent,
-            custumerName,
-            stripeCustomeId: clerkUserId,
-            email: custumerEmail,
-            currency,
-            amountTotal: total_details?.amount_discount ? total_details.amount_discount / 100 : 0,
-            products: sanityProducts,
+            customerName: custumerName, // Use correct field name
+            customerEmail: custumerEmail, // Use correct field name
+            stripePaymentId: id, // Use correct field name
+            stripeCustomeId: clerkUserId, // Ensure this is correct, maybe it's `stripeCustomerId`
+            currency: currency,
+            discount:discountAmount,
+            totalPrice: totalPrice,  // Use calculated total price
+            products: sanityProducts,  // Pass the mapped products directly
+            orderStatus: 'pending',  // You can set this dynamically if needed
+            orderDate: new Date().toISOString(),  // Set the current date as order date
         });
 
         console.log("Order successfully created in Sanity:", order);
         return order;
     } catch (error) {
         const err = error as Error;  // Handle the error with proper type assertion
-        console.log("Error creating order in Sanity:", err.message);
+        console.log(`Error creating order in Sanity: 1. ${error} 2. ${err} 3. ${err.message}`);
         throw error;
     }
 }
+

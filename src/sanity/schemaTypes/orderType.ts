@@ -28,6 +28,13 @@ export const orderType = defineType({
       type: 'string',
       validation: (Rule) => Rule.required(),
     }),
+    // Stripe Customer ID (added to your schema)
+    defineField({
+      name: 'stripeCustomeId',  // Rename if necessary
+      title: 'Stripe Customer ID',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    }),
     // Products
     defineField({
       name: 'products',
@@ -81,7 +88,7 @@ export const orderType = defineType({
       },
       validation: (Rule) => Rule.required(),
     }),
-    // Discount
+    // Discount (added to your schema)
     defineField({
       name: 'discount',
       title: 'Discount',

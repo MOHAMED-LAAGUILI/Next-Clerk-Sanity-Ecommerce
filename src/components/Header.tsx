@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ClerkLoaded, SignInButton, UserButton, useUser } from "@clerk/nextjs";
 import Link from "next/link";
+import Form from "next/form";
 import { PackageIcon, TrolleyIcon, SearchIcon } from "@sanity/icons";
 import ThemeToggle from "./ThemeToggle";
 import { ToastContainer, toast } from "react-toastify";
@@ -87,7 +88,7 @@ const Header = () => {
         </button>
 
         {/* Search Input */}
-        <form action="/search" className="hidden sm:flex flex-grow max-w-xl">
+        <Form action="/search" className="hidden sm:flex flex-grow max-w-xl">
           <div className="flex items-center border border-gray-300 dark:border-gray-600 rounded-lg overflow-hidden flex-grow">
             <input
               type="text"
@@ -102,7 +103,7 @@ const Header = () => {
               <SearchIcon />
             </button>
           </div>
-        </form>
+        </Form>
 
         {/* Desktop Links */}
         <div className="hidden sm:flex items-center space-x-4">
@@ -148,7 +149,7 @@ const Header = () => {
               aria-label="Create Passkey"
               disabled={loading}
             >
-              {loading ? <span>Loading...</span> : <span>Create Passkey</span>}
+              {loading ? <span>Creating...</span> : <span>Create Passkey</span>}
             </button>
           )}
 
@@ -161,14 +162,14 @@ const Header = () => {
         className={`sm:hidden ${isMenuOpen ? "block" : "hidden"} bg-white dark:bg-gray-800 shadow-md mt-2`}
       >
         <div className="flex flex-col px-6 py-4 space-y-4">
-          <form action="/search" className="mb-4">
+          <Form action="/search" className="mb-4">
             <input
               type="text"
               name="query"
               placeholder="Search a product..."
               className="w-full bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 dark:focus:ring-blue-500 transition"
             />
-          </form>
+          </Form>
           <Link
             href="/basket"
             className="py-2 text-gray-800 dark:text-gray-200 hover:text-blue-600 transition flex items-center"
@@ -213,7 +214,7 @@ const Header = () => {
               aria-label="Create Passkey"
               disabled={loading}
             >
-              {loading ? <span>Loading...</span> : <span>Create Passkey</span>}
+              {loading ? <span>Creating...</span> : <span>Create Passkey</span>}
             </button>
           )}
         </div>
