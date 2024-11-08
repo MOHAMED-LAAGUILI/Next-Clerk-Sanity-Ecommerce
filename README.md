@@ -5,4 +5,6 @@ with auth
 user and admin session
 stripe payment
 
+live demo 
+https://react-next-clerk-sanity-ecommerce-767896446.vercel.app/
 ![react-next-clerk-sanity-ecommerce-767896446 vercel app](https://github.com/user-attachments/assets/5ea561c1-d833-47be-83dd-f1c008997395)
