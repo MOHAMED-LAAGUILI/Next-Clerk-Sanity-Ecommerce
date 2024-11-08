@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import useBasketStore from "@/store/store";
 import { motion } from "framer-motion"; // For animations
 import { Button } from '@/components/ui/button';
@@ -10,7 +10,6 @@ import Link from "next/link";
 const SuccessPage = () => {
   const searchParams = useSearchParams();
   const orderNumber = searchParams.get("orderNumber");
-  const sessionId = searchParams.get("session_id");
   const clearBasket = useBasketStore((state) => state.clearBasket);
 
 

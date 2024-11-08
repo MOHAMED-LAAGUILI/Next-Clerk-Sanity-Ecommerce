@@ -77,10 +77,10 @@ import { createCheckoutSession, Metadata } from '../../../../StripePayment/creat
           autoClose: 5000,
         });
       }
-    } catch (error: any) {
+    } catch (error) {
       // Log the error for debugging and display a toast message
       console.error('Checkout error:', error);
-      toast.error(`An error occurred during checkout: ${error?.message || error}`, {
+      toast.error(`An error occurred during checkout: ${error}`, {
         position: "top-center",
         autoClose: 5000,
       });

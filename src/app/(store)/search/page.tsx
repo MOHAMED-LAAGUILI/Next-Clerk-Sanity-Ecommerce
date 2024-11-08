@@ -1,13 +1,10 @@
 import { searchProductByName } from "@/sanity/lib/Groq_Queries/getProductsBySearchName";
 import { imageUrl } from "@/lib/imageUrl";
 import Link from "next/link";
+import Image from "next/image";
 
 // Loading UI for when search results are being fetched
-const Loading = () => (
-  <div className="w-full text-center py-6">
-    <span className="text-xl font-semibold text-gray-600">Loading results...</span>
-  </div>
-);
+
 
 // No Results UI for when no products match the search query
 const NoResults = () => (
@@ -16,8 +13,8 @@ const NoResults = () => (
   </div>
 );
 
-export default async function SearchPage({ searchParams }: { searchParams: { query: string } }) {
-  const { query } = searchParams;
+export default async function SearchPage({ searchParams }: { searchParams: Promise<{ query: string }> }) {
+  const { query } = await searchParams;
   
   // Fetch products based on the search query
   const products = await searchProductByName(query);
@@ -47,10 +44,12 @@ export default async function SearchPage({ searchParams }: { searchParams: { que
                     {/* Product Image Section */}
                     <div className="relative">
                       {product.image?.asset && (
-                        <img
+                        <Image
                           src={imageUrl(product.image).url()}
                           alt={product.name || "Product Image"}
                           className="object-cover w-full h-48"
+                          width={"200"}
+                          height={"200"}
                         />
                       )}
                     </div>

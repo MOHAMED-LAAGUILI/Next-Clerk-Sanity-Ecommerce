@@ -2,10 +2,10 @@ import { getProductsByCategory } from "@/sanity/lib/Groq_Queries/getProductsByCa
 import { getAllCategories } from "@/sanity/lib/Groq_Queries/getAllCategories";
 import ProductView from './../../../../components/ProductsView';
 
-const CategoriesPage = async ({ params }: { params: { slug: string } }) => {
+const CategoriesPage = async ({params}:{ params : Promise<{ slug: string }>}) => {
   try {
     // Destructure the slug directly from params
-    const { slug } = params;
+    const { slug } = await params;
     
     // Fetch products and categories based on the slug
     const products = await getProductsByCategory(slug);

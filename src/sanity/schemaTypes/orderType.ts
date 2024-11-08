@@ -1,5 +1,5 @@
 import { defineField, defineType } from 'sanity';
-import { DocumentIcon } from '@sanity/icons'; // Use DocumentIcon as an alternative
+import { DocumentIcon } from '@sanity/icons';
 
 export const orderType = defineType({
   name: 'order',
@@ -7,6 +7,13 @@ export const orderType = defineType({
   type: 'document',
   icon: DocumentIcon,
   fields: [
+    // Order number
+    defineField({
+      name: 'orderNumber',
+      title: 'Order Number',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    }),
     // Customer Name
     defineField({
       name: 'customerName',
@@ -28,14 +35,14 @@ export const orderType = defineType({
       type: 'string',
       validation: (Rule) => Rule.required(),
     }),
-    // Stripe Customer ID (added to your schema)
+    // Stripe Customer ID
     defineField({
-      name: 'stripeCustomeId',  // Rename if necessary
+      name: 'stripeCustomerId',
       title: 'Stripe Customer ID',
       type: 'string',
       validation: (Rule) => Rule.required(),
     }),
-    // Products
+    // Products (including an image field)
     defineField({
       name: 'products',
       title: 'Products',
@@ -61,6 +68,15 @@ export const orderType = defineType({
               title: 'Price',
               type: 'number',
               validation: (Rule) => Rule.required().min(0),
+            }),
+            // Product image (new field added)
+            defineField({
+              name: 'productImage',
+              title: 'Product Image',
+              type: 'image',
+              options: {
+                hotspot: true, // Allows cropping and focusing on the image
+              },
             }),
           ],
         },
@@ -88,7 +104,7 @@ export const orderType = defineType({
       },
       validation: (Rule) => Rule.required(),
     }),
-    // Discount (added to your schema)
+    // Discount
     defineField({
       name: 'discount',
       title: 'Discount',
@@ -127,14 +143,17 @@ export const orderType = defineType({
     select: {
       title: 'customerName',
       subtitle: 'orderStatus',
-      media: 'products[0].product.image', // Adjust based on product structure
+       // Reference the image field correctly
     },
-    prepare({ title, subtitle, media }) {
+    prepare({ title, subtitle }) {
+    
       return {
         title,
         subtitle: subtitle || 'No status',
-        media,
+       
       };
     },
   },
+  
 });
+

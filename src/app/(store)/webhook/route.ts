@@ -75,7 +75,7 @@ export async function POST(req: NextRequest) {
 async function createOrderInSanity(session: Stripe.Checkout.Session) {
     console.log("Creating order in Sanity...");
 
-    const { id, amount_total, currency, metadata, payment_intent, customer, total_details } = session;
+    const { id, amount_total, currency, metadata, total_details } = session;
     const { orderNumber, custumerName, custumerEmail, clerkUserId } = metadata as Metadata;
 
     console.log("Extracted session data:", { id, amount_total, currency, orderNumber, custumerName, custumerEmail, clerkUserId });
@@ -98,23 +98,24 @@ async function createOrderInSanity(session: Stripe.Checkout.Session) {
                     _ref: productReference,  // Ensure product reference is correctly set
                 },
                 quantity: item.quantity || 0,
-                price: price,  // Add price field
+                price: price,  
             };
         });
 
         console.log("Mapped products for Sanity:", sanityProducts);
 
         // Calculate totalPrice, defaulting to 0 if amount_total or total_details.amount_discount is null
-        const totalPrice = total_details?.amount_discount ? total_details.amount_discount / 100 : amount_total ? amount_total / 100 : 0;
+        const totalPrice = amount_total ? amount_total / 100 : 0;
         const discountAmount = total_details?.amount_discount ? total_details.amount_discount / 100 : 0;
 
         // Creating the order in Sanity
         const order = await client.create({
             _type: "order",
+            orderNumber:orderNumber,
             customerName: custumerName, // Use correct field name
             customerEmail: custumerEmail, // Use correct field name
             stripePaymentId: id, // Use correct field name
-            stripeCustomeId: clerkUserId, // Ensure this is correct, maybe it's `stripeCustomerId`
+            stripeCustomerId: clerkUserId, // Ensure this is correct, maybe it's `stripeCustomerId`
             currency: currency,
             discount:discountAmount,
             totalPrice: totalPrice,  // Use calculated total price

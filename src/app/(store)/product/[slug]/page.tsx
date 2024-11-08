@@ -2,22 +2,25 @@ import { imageUrl } from "@/lib/imageUrl";
 import Image from "next/image";
 import GetSingleProductBySlug from './../../../../sanity/lib/Groq_Queries/getSingleProductBySlug';
 import AddToBasketButton from "@/components/AddToBasketButton";
+import { notFound } from "next/navigation";
+
+
+export const dynamic = "force-static";
+export const revalidate = 60;
+
 
 async function SingleProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const product = await GetSingleProductBySlug(slug);
 
   if (!product) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <span className="text-3xl">Product not found .</span>
-      </div>
-    );
-  }
+    return notFound();
+   }
 
   const isOutOfStock = !product.stock || product.stock <= 0;
   const imageUrlString = product.image?.asset ? imageUrl(product.image).url() : "";
 
+ 
   return (
     <div className="p-6 max-w-screen-xl mx-auto flex flex-col lg:flex-row">
 

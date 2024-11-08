@@ -89,9 +89,11 @@ export type Order = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  orderNumber?: string;
   customerName?: string;
   customerEmail?: string;
   stripePaymentId?: string;
+  stripeCustomerId?: string;
   products?: Array<{
     product?: {
       _ref: string;
@@ -101,6 +103,17 @@ export type Order = {
     };
     quantity?: number;
     price?: number;
+    productImage?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
     _key: string;
   }>;
   totalPrice?: number;
@@ -308,6 +321,41 @@ export type ALL_PRODUCTS_QUERYResult = Array<{
   stock?: number;
 }>;
 
+// Source: ./src/sanity/lib/Groq_Queries/getMyOrders.ts
+// Variable: MY_ORDERS_QUERY
+// Query: *[_type == "order" && stripeCustomerId == $userId] | order(orderDate desc) {            _id,            orderNumber,            orderDate,            totalPrice,            discount,              currency,            orderStatus,            products[] {                _key,                quantity,                price,                product-> { // Dereference to fetch all fields from the product schema                    _id,                    name,                    description,  // Include description field from product                    price,         // Include price field from product                    image,         // Include image field from product (assuming it's an image reference)                                          }            }        }
+export type MY_ORDERS_QUERYResult = Array<{
+  _id: string;
+  orderNumber: string | null;
+  orderDate: string | null;
+  totalPrice: number | null;
+  discount: number | null;
+  currency: "eur" | "gbp" | "usd" | null;
+  orderStatus: "cancelled" | "delivered" | "pending" | "processing" | "shipped" | null;
+  products: Array<{
+    _key: string;
+    quantity: number | null;
+    price: number | null;
+    product: {
+      _id: string;
+      name: string | null;
+      description: string | null;
+      price: number | null;
+      image: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: "image";
+      } | null;
+    } | null;
+  }> | null;
+}>;
+
 // Source: ./src/sanity/lib/Groq_Queries/getProductsByCategory.ts
 // Variable: PRODUCTS_SELECTED_BY_CATEGORY
 // Query: *[_type == "products" && references(*[_type == "category" && slug.current == $categorySlug]._id)] | order(name asc)
@@ -417,6 +465,7 @@ declare module "@sanity/client" {
     "\n    *[_type == \"sales\" \n    && isActive == true \n    && couponCode == $couponCode\n    && validFrom <= now() \n    && validTo >= now()] | order(validFrom desc)[0] {\n      saleTitle,\n      saleDescription,\n      discountAmount,\n      couponCode,\n      validFrom,\n      validTo\n    }\n  ": ACTIVE_SALE_BY_COUPON_QUERYResult;
     "*[_type == \"category\"] | order(name asc) ": ALL_CATEGORIES_QUERYResult;
     "*[_type == \"products\"] | order(name asc)": ALL_PRODUCTS_QUERYResult;
+    "\n        *[_type == \"order\" && stripeCustomerId == $userId] | order(orderDate desc) {\n            _id,\n            orderNumber,\n            orderDate,\n            totalPrice,\n            discount,  \n            currency,\n            orderStatus,\n            products[] {\n                _key,\n                quantity,\n                price,\n                product-> { // Dereference to fetch all fields from the product schema\n                    _id,\n                    name,\n                    description,  // Include description field from product\n                    price,         // Include price field from product\n                    image,         // Include image field from product (assuming it's an image reference)\n                          \n                }\n            }\n        }\n    ": MY_ORDERS_QUERYResult;
     "\n    *[_type == \"products\" && references(*[_type == \"category\" && slug.current == $categorySlug]._id)] | order(name asc)\n  ": PRODUCTS_SELECTED_BY_CATEGORYResult;
     "\n    *[_type == \"products\" && name match $searchParams] | order(name asc)\n    ": PRODUCT_SEARCH_QUERYResult;
     "\n    *[_type == \"products\" && slug.current == $slug][0]\n  ": GET_PRODUCT_BY_SLUGResult;
