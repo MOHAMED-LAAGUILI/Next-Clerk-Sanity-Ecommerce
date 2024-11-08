@@ -29,7 +29,7 @@ const AddToBasketButton = ({ product, disabled }: AddToBasketButtonProps) => {
       <button
         onClick={handleRemoveFromBasket} // Decrease quantity by 1
         disabled={itemCount <= 0 || disabled} // Disable if no items in the basket
-        className="bg-red-500 text-white px-4 py-2 rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
+        className="text-2xl bg-red-500 text-white px-5 py-2 rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
       >
         -
       </button>
@@ -38,7 +38,7 @@ const AddToBasketButton = ({ product, disabled }: AddToBasketButtonProps) => {
       <button
         onClick={handleAddToBasket} // Increase quantity by 1
         disabled={disabled} // Disable if the button is disabled
-        className="bg-blue-500 text-white px-4 py-2 rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
+         className="text-2xl bg-green-500 text-white px-5 py-2 rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
       >
         +
       </button>

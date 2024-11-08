@@ -10,15 +10,15 @@ interface ProductViewProps {
 
 const ProductView = ({ products, categories }: ProductViewProps) => {
   return (
-    <div className="flex flex-col container mx-auto px-4 py-6">
+    <div className="flex flex-col ">
       
       {/* Categories Section */}
-      <section className="w-full md:w-1/4 mb-8 md:mb-0 md:mr-8">
+      <section>
         <CategorySelector categories={categories} />
       </section>
 
       {/* Products Section */}
-      <section className="w-full md:w-3/4">
+      <section>
         <ProductGrid products={products} />
       </section>
 

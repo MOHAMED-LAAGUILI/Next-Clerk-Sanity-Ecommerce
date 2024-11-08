@@ -44,19 +44,31 @@ const Header = () => {
   return (
     <header className="bg-white dark:bg-gray-900 shadow-lg">
       <ToastContainer />
-      <div className="container mx-auto flex flex-wrap justify-between items-center px-4 py-4">
+      <div className="container mx-auto flex flex-wrap justify-between items-center px-4 py-4 sm:px-6 md:px-8">
         {/* Logo */}
         <Link
           href="/"
           className="text-3xl font-bold text-blue-600 dark:text-blue-300 transition transform hover:scale-105"
         >
-          <AnimatedText text={"Eshopr.eco"} width={""} height={""} size={""} />
+          <AnimatedText text={"Eshopr.eco"} />
         </Link>
-        <div className="sm:hidden">
+
+        {/* Mobile Basket & Theme Toggle */}
+        <div className="flex sm:hidden items-center space-x-4">
+          <Link
+            href="/basket"
+            className="py-2 text-gray-800 dark:text-gray-200 hover:text-blue-600 transition flex items-center"
+            aria-label="View basket"
+          >
+            <TrolleyIcon className="mr-1 h-8 w-8" />
+            <span className="bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs">
+              {itemCount}
+            </span>
+          </Link>
           <ThemeToggle />
         </div>
 
-        {/* Mobile Menu Toggle */}
+        {/* Mobile Menu Toggle Button */}
         <button
           onClick={toggleMenu}
           className="block sm:hidden"
@@ -87,7 +99,7 @@ const Header = () => {
           </svg>
         </button>
 
-        {/* Search Input */}
+        {/* Desktop Search */}
         <Form action="/search" className="hidden sm:flex flex-grow max-w-xl">
           <div className="flex items-center border border-gray-300 dark:border-gray-600 rounded-lg overflow-hidden flex-grow">
             <input
@@ -106,15 +118,14 @@ const Header = () => {
         </Form>
 
         {/* Desktop Links */}
-        <div className="hidden sm:flex items-center space-x-4">
+        <div className="hidden sm:flex items-center space-x-6">
           <Link
             href="/basket"
             className="flex items-center text-gray-800 dark:text-gray-200 hover:text-blue-600 transition"
             aria-label="View basket"
           >
-            <TrolleyIcon className="mr-1 h-10 w-10" />
-
-            <span className=" bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs">
+            <TrolleyIcon className="mr-1 h-9 w-9" />
+            <span className="bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs">
               {itemCount}
             </span>
           </Link>
@@ -170,18 +181,7 @@ const Header = () => {
               className="w-full bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 dark:focus:ring-blue-500 transition"
             />
           </Form>
-          <Link
-            href="/basket"
-            className="py-2 text-gray-800 dark:text-gray-200 hover:text-blue-600 transition flex items-center"
-            aria-label="View basket"
-          >
-            <TrolleyIcon className="mr-1 h-6 w-6" />
-            
-            Basket
-            <span className=" bg-red-500 text-white rounded-full ms-1 w-7 h-7 flex items-center justify-center text-xs">
-              {itemCount}
-            </span>
-          </Link>
+
           <ClerkLoaded>
             {user ? (
               <>

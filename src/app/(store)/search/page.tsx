@@ -21,7 +21,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-8">
+      <h1 className="text-3xl font-bold mb-8">
         Search Results for: <span className="text-blue-500">{query}</span>
       </h1>
 
@@ -29,7 +29,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
         <NoResults />
       ) : (
         <>
-          <div className="text-lg mb-4 text-gray-600 dark:text-white">
+          <div className="text-lg mb-4">
             <span>{products.length} product{products.length !== 1 ? "s" : ""} found.</span>
           </div>
 
@@ -37,7 +37,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
             {products.map((product) => (
               <div
                 key={product._id}
-                className="bg-white border border-gray-300 rounded-lg shadow-lg overflow-hidden transition-transform duration-200 hover:shadow-xl relative"
+                className=" rounded-lg shadow-lg overflow-hidden transition-transform duration-200 hover:shadow-xl relative"
               >
                 <Link href={`/product/${product.slug?.current}`} passHref>
                   <p className="flex flex-col p-4">
@@ -56,11 +56,11 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
 
                     {/* Product Info Section */}
                     <div className="mt-3">
-                      <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
+                      <h2 className="text-xl font-semibold ">
                         {product.name || "Unnamed Product"}
                       </h2>
-                      <p className="text-gray-600 dark:text-gray-400 mt-1">{product.description}</p>
-                      <p className="text-lg font-bold mt-2 text-gray-900 dark:text-gray-100">
+                      <p className=" mt-1">{product.description}</p>
+                      <p className="text-lg font-bold mt-2">
                         ${product.price}
                       </p>
                     </div>

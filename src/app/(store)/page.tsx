@@ -14,14 +14,14 @@ export default async function Home() {
 
  
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen">
       {/* Black Friday Banner Section */}
-      <div className="bg-white shadow-md">
+      <div className=" shadow-md m-4">
         <BlackFridayBanner />
       </div>
 
       {/* Categories and Product View */}
-      <div className="container mx-auto px-4 py-6">
+      <div className="px-4 py-6">
         {/* Product View Section */}
         <ProductView products={products} categories={categories} />
       </div>
